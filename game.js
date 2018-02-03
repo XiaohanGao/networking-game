@@ -6,35 +6,36 @@ let myGame = {
 	
 	initializeGame: function() {
 		myGame.initializeVars();
-		this.setupNode(this.firstNode, 0);
+		this.setupNode(this.firstNode);
 	},
 	
 	setupNode: function(nodeIndex) {
-		let currentNode = nodes[nodeIndex]; 
-		console.log(nodeIndex);
-		if (currentNode.type !== 'ending') {
-			let block = this.textLink(currentNode.text, currentNode.type, currentNode.kids[0]);
-		} else {
-			let block = this.textLink(currentNode.text, currentNode.type, '');
-		}
-		
+		// there are only two types of nodes in nodes.js - question and ending
+
+		let currentNode = nodes[nodeIndex];
 		
 		if (currentNode.type == 'question'){
-			let yes = this.textLink("yes", "yesNo", currentNode.kids[0]);
-			let no = this.textLink("no", "yesNo", currentNode.kids[1]);
+			this.textLink(currentNode.text, currentNode.type, '');
+			console.log(currentNode);
+			this.textLink("yes", "yesNo", currentNode.kids[0]);
+			this.textLink("no", "yesNo", currentNode.kids[1]);
+		}
+
+		if (currentNode.type == 'ending') {
+			this.textLink(currentNode.text, currentNode.type, '');
 		}
 	},
 	
 	textLink: function(text, type, next) {
 		// create block container
-		let cont = $('<div></div>')
+		let container = $('<div></div>')
 			.addClass('block ' + type)
 			.appendTo('#content');
 
 		// create link
 		let newLink = $('<a></a>')
 			.addClass('link')
-			.appendTo(cont)
+			.appendTo(container)
 			.html(text);
 
 		if (type == "yesNo") {
