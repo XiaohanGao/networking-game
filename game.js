@@ -9,15 +9,17 @@ let myGame = {
 		this.curNode = 0;
 	},
 	
+	// give instructions to the intelligent monkey to construct blocks
 	setupNode: function(nodeIndex) {
+		let currentNode = nodes[nodeIndex]; // get current node index
+		$('.link').unbind('click'); // prevent users to click another selection
+
 		// there are only two types of nodes in source file nodes.js:  
 		// question and ending. 
 		// For questions, we will create 3 blocks after clicking 
 		// (question itself, yes, no)
 		// For endings, only one block will be created
 
-		let currentNode = nodes[nodeIndex];
-		
 		if (currentNode.type == 'question'){
 			this.textLink(currentNode.text, currentNode.type, '');
 			this.textLink("yes", "yesNo", currentNode.kids[0]);
@@ -29,23 +31,23 @@ let myGame = {
 		}
 	},
 	
+	// an intelligent monkey to create blocks, add content and links in HTML
 	textLink: function(text, type, nextIndex) {
-		// an intelligent monkey to create blocks, add links in HTML
 
 		// create block container
 		let container = $('<div></div>')
 			.addClass('block ' + type)
 			.appendTo('#content');
 
-		// create text and put it into the container
-		let text = $('<a></a>')
+		// create content and put it into the container
+		let content = $('<a></a>')
 			.addClass('link')
 			.appendTo(container)
 			.html(text);
 
 		// create links of yes/no buttons
 		if (type == "yesNo") {
-			text.click(function(){
+			content.click(function(){
 					myGame.setupNode(nextIndex);
 				}
 			);
