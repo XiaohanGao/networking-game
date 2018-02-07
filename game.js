@@ -6,7 +6,6 @@ let myGame = {
 
 	initializeVars: function() {
 		this.firstNode = 0;
-		this.curNode = 0;
 	},
 	
 	// give instructions to the intelligent monkey to construct blocks
@@ -28,6 +27,10 @@ let myGame = {
 
 		if (currentNode.type == 'ending') {
 			this.textLink(currentNode.text, currentNode.type, '');
+			// show retry button in 0.5s
+			window.setTimeout(function() {
+				myGame.textLink("Try again", "reset", '');
+			}, 500);
 		}
 	},
 	
@@ -45,13 +48,24 @@ let myGame = {
 			.appendTo(container)
 			.html(text);
 
-		// create links of yes/no buttons
+		// create links on yes/no buttons
 		if (type == "yesNo") {
 			content.click(function(){
 					myGame.setupNode(nextIndex);
 				}
 			);
 		}
+
+		if (type == "reset") {
+			$('.reset').click(function() {
+				myGame.reset();
+			})
+		}
+	},
+
+	reset: function() {
+		$('#content').html('');
+		myGame.initializeGame();
 	}
 };
 
