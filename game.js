@@ -12,7 +12,7 @@ let myGame = {
 	setupNode: function(nodeIndex) {
 		let currentNode = nodes[nodeIndex]; // get current node index
 		$('.link').unbind('click'); // prevent users to click another selection
-
+		
 		// there are only two types of nodes in source file nodes.js:  
 		// question and ending. 
 		// For questions, we will create 3 blocks after clicking 
@@ -43,7 +43,7 @@ let myGame = {
 			.appendTo('#content');
 
 		// create content and put it into the container
-		let content = $('<a></a>')
+		let content = $('<button></button>')
 			.addClass('link')
 			.appendTo(container)
 			.html(text);
